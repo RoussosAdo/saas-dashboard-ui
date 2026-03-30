@@ -26,20 +26,27 @@ export default function DashboardSidebar() {
           <div className="space-y-2">
             <NavItem
               label="Overview"
-              active
+              href="/"
               icon={<LayoutGrid className="h-4 w-4" />}
             />
             <NavItem
               label="Analytics"
+              href="/analytics"
               icon={<BarChart3 className="h-4 w-4" />}
             />
-            <NavItem label="Users" icon={<Users className="h-4 w-4" />} />
+            <NavItem
+              label="Users"
+              href="/users"
+              icon={<Users className="h-4 w-4" />}
+            />
             <NavItem
               label="Billing"
+              href="/billing"
               icon={<CreditCard className="h-4 w-4" />}
             />
             <NavItem
               label="Settings"
+              href="/settings"
               icon={<Settings className="h-4 w-4" />}
             />
           </div>
