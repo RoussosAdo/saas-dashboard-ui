@@ -2,6 +2,7 @@ import DashboardShell from "@/app/components/layout/dashboard-shell";
 import StatCard from "@/app/components/dashboard/stat-card";
 import SectionHeader from "@/app/components/dashboard/section-header";
 import DashboardSection from "@/app/components/dashboard/dashboard-section";
+import UsersTable from "@/app/components/dashboard/users-table";
 import { activityItems, stats } from "@/app/data/dashboard";
 
 export default function Home() {
@@ -59,6 +60,8 @@ export default function Home() {
           </div>
         </DashboardSection>
       </section>
+
+      <UsersTable />
     </DashboardShell>
   );
 }
