@@ -4,6 +4,7 @@ import SectionHeader from "@/app/components/dashboard/section-header";
 import DashboardSection from "@/app/components/dashboard/dashboard-section";
 import UsersTable from "@/app/components/dashboard/users-table";
 import { activityItems, stats } from "@/app/data/dashboard";
+import RevenueChart from "@/app/components/dashboard/revenue-chart";
 
 export default function Home() {
   return (
@@ -31,19 +32,9 @@ export default function Home() {
             }
           />
 
-          <div className="mt-8 flex h-72 items-end gap-3">
-            {[48, 62, 55, 80, 74, 90, 68, 84, 72, 96, 88, 100].map(
-              (height, i) => (
-                <div key={i} className="flex flex-1 flex-col justify-end">
-                  <div
-                    className="rounded-t-xl bg-white/90"
-                    style={{ height: `${height * 2}px` }}
-                  />
-                </div>
-              )
-            )}
-          </div>
+        <RevenueChart />
         </DashboardSection>
+        
 
         <DashboardSection>
           <SectionHeader eyebrow="Recent activity" title="Team updates" />
@@ -60,6 +51,7 @@ export default function Home() {
           </div>
         </DashboardSection>
       </section>
+
 
       <UsersTable />
     </DashboardShell>
