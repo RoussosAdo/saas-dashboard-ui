@@ -7,23 +7,31 @@ import SectionHeader from "app/components/dashboard/section-header";
 import StatusBadge from "app/components/dashboard/status-badge";
 import { dashboardUsers } from "app/data/dashboard";
 
+type StatusFilter = "All" | "Active" | "Pending" | "Inactive";
+
+const filters: StatusFilter[] = ["All", "Active", "Pending", "Inactive"];
+
 export default function UsersTable() {
   const [query, setQuery] = useState("");
+  const [activeFilter, setActiveFilter] = useState<StatusFilter>("All");
 
   const filteredUsers = useMemo(() => {
     const value = query.trim().toLowerCase();
 
-    if (!value) return dashboardUsers;
-
     return dashboardUsers.filter((user) => {
-      return (
+      const matchesSearch =
+        !value ||
         user.name.toLowerCase().includes(value) ||
         user.email.toLowerCase().includes(value) ||
         user.plan.toLowerCase().includes(value) ||
-        user.status.toLowerCase().includes(value)
-      );
+        user.status.toLowerCase().includes(value);
+
+      const matchesFilter =
+        activeFilter === "All" || user.status === activeFilter;
+
+      return matchesSearch && matchesFilter;
     });
-  }, [query]);
+  }, [query, activeFilter]);
 
   return (
     <DashboardSection className="mt-6">
@@ -47,6 +55,26 @@ export default function UsersTable() {
             className="w-full bg-transparent text-sm text-white outline-none placeholder:text-zinc-500"
           />
         </div>
+      </div>
+
+      <div className="mt-6 flex flex-wrap items-center gap-2">
+        {filters.map((filter) => (
+          <button
+            key={filter}
+            onClick={() => setActiveFilter(filter)}
+            className={`rounded-xl px-3 py-2 text-sm font-medium transition ${
+              activeFilter === filter
+                ? "bg-white text-black"
+                : "border border-white/10 bg-white/[0.03] text-zinc-400 hover:bg-white/[0.06] hover:text-white"
+            }`}
+          >
+            {filter}
+          </button>
+        ))}
+
+        <span className="ml-1 text-xs text-zinc-500">
+          {filteredUsers.length} users
+        </span>
       </div>
 
       <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
@@ -79,7 +107,9 @@ export default function UsersTable() {
                     </div>
                   </td>
 
-                  <td className="px-5 py-4 text-sm text-zinc-300">{user.plan}</td>
+                  <td className="px-5 py-4 text-sm text-zinc-300">
+                    {user.plan}
+                  </td>
 
                   <td className="px-5 py-4">
                     <StatusBadge status={user.status} />
@@ -97,7 +127,7 @@ export default function UsersTable() {
                     colSpan={4}
                     className="px-5 py-10 text-center text-sm text-zinc-500"
                   >
-                    No users found for this search.
+                    No users found for this search or filter.
                   </td>
                 </tr>
               )}
