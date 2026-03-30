@@ -1,3 +1,6 @@
+import DashboardSidebar from "@/app/components/layout/dashboard-sidebar";
+import DashboardTopbar from "@/app/components/layout/dashboard-topbar";
+
 type DashboardShellProps = {
   children: React.ReactNode;
 };
@@ -5,20 +8,13 @@ type DashboardShellProps = {
 export default function DashboardShell({ children }: DashboardShellProps) {
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="mx-auto flex max-w-7xl gap-6 px-6 py-8">
-        <aside className="hidden w-64 shrink-0 rounded-2xl border border-white/10 bg-white/5 p-4 lg:block">
-          <div className="text-lg font-semibold">Dashboard</div>
-          <nav className="mt-6 space-y-2 text-sm text-zinc-400">
-            <div className="rounded-lg bg-white/10 px-3 py-2 text-white">Overview</div>
-            <div className="px-3 py-2">Analytics</div>
-            <div className="px-3 py-2">Users</div>
-            <div className="px-3 py-2">Settings</div>
-          </nav>
-        </aside>
+      <div className="mx-auto flex max-w-7xl gap-6 px-4 py-6 sm:px-6 lg:px-8">
+        <DashboardSidebar />
 
-        <section className="flex-1 rounded-2xl border border-white/10 bg-white/5 p-6">
+        <main className="min-w-0 flex-1 rounded-3xl border border-white/10 bg-[#0a0a0a] p-5 sm:p-6 lg:p-8">
+          <DashboardTopbar />
           {children}
-        </section>
+        </main>
       </div>
     </div>
   );
