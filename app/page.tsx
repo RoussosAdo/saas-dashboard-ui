@@ -1,10 +1,10 @@
-import DashboardShell from "@/app/components/layout/dashboard-shell";
-import StatCard from "@/app/components/dashboard/stat-card";
-import SectionHeader from "@/app/components/dashboard/section-header";
-import DashboardSection from "@/app/components/dashboard/dashboard-section";
-import UsersTable from "@/app/components/dashboard/users-table";
-import { activityItems, stats } from "@/app/data/dashboard";
-import RevenueChart from "@/app/components/dashboard/revenue-chart";
+import DashboardShell from "app/components/layout/dashboard-shell";
+import StatCard from "app/components/dashboard/stat-card";
+import SectionHeader from "app/components/dashboard/section-header";
+import DashboardSection from "app/components/dashboard/dashboard-section";
+import UsersTable from "app/components/dashboard/users-table";
+import { activityItems, stats } from "app/data/dashboard";
+import RevenueChart from "app/components/dashboard/revenue-chart";
 
 export default function Home() {
   return (
@@ -20,7 +20,7 @@ export default function Home() {
         ))}
       </section>
 
-      <section className="mt-6 grid gap-6 xl:grid-cols-[1.4fr_0.9fr]">
+      <section className="mt-6 grid gap-6 xl:grid-cols-[1.6fr_0.85fr]">
         <DashboardSection>
           <SectionHeader
             eyebrow="Performance"

@@ -2,10 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import DashboardSection from "@/app/components/dashboard/dashboard-section";
-import SectionHeader from "@/app/components/dashboard/section-header";
-import StatusBadge from "@/app/components/dashboard/status-badge";
-import { dashboardUsers } from "@/app/data/dashboard";
+import DashboardSection from "app/components/dashboard/dashboard-section";
+import SectionHeader from "app/components/dashboard/section-header";
+import StatusBadge from "app/components/dashboard/status-badge";
+import { dashboardUsers } from "app/data/dashboard";
 
 export default function UsersTable() {
   const [query, setQuery] = useState("");

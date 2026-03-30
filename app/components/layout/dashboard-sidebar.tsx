@@ -1,4 +1,4 @@
-import NavItem from "@/app/components/layout/nav-item";
+import NavItem from "app/components/layout/nav-item";
 import {
   LayoutGrid,
   BarChart3,

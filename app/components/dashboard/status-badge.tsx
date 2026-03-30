@@ -1,5 +1,5 @@
-import { cn } from "@/app/lib/utils";
-import type { UserStatus } from "@/app/types/dashboard";
+import { cn } from "app/lib/utils";
+import type { UserStatus } from "public/app/types/dashboard";
 
 type StatusBadgeProps = {
   status: UserStatus;

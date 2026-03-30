@@ -1,5 +1,5 @@
-import DashboardSidebar from "@/app/components/layout/dashboard-sidebar";
-import DashboardTopbar from "@/app/components/layout/dashboard-topbar";
+import DashboardSidebar from "app/components/layout/dashboard-sidebar";
+import DashboardTopbar from "app/components/layout/dashboard-topbar";
 
 type DashboardShellProps = {
   children: React.ReactNode;
