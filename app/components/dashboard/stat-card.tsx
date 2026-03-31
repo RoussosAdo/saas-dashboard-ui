@@ -15,9 +15,7 @@ export default function StatCard({
       <p className="mt-3 text-3xl font-bold tracking-tight text-white">
         {value}
       </p>
-      <p className="mt-3 text-sm font-medium text-indigo-300">
-        {change} this month
-      </p>
+      <p className="mt-3 text-sm font-medium text-indigo-300">{change} this month</p>
     </article>
   );
 }

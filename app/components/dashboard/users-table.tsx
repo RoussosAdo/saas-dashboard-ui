@@ -89,7 +89,7 @@ export default function UsersTable({
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   const searchBox = (
-    <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-zinc-400 transition-all duration-300 focus-within:border-indigo-400/50 focus-within:bg-white/[0.05] focus-within:shadow-[0_0_0_4px_rgba(99,102,241,0.12)] lg:w-[320px]">
+    <div className="flex w-full items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-zinc-400 transition-all duration-300 focus-within:border-indigo-400/50 focus-within:bg-white/[0.05] focus-within:shadow-[0_0_0_4px_rgba(99,102,241,0.12)] lg:w-[320px]">
       <Search className="h-4 w-4 shrink-0" />
       <input
         value={query}
@@ -110,7 +110,7 @@ export default function UsersTable({
   );
 
   const exportButton = (
-    <button className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.06]">
+    <button className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.06] sm:w-auto">
       Export
     </button>
   );
@@ -159,89 +159,123 @@ export default function UsersTable({
         <div className="mt-6">
           <TableSkeleton rows={USERS_PER_PAGE} />
         </div>
-      ) : (
-        <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-white/10 text-left">
-              <thead className="bg-white/[0.03]">
-                <tr>
-                  <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
-                    Name
-                  </th>
-                  <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
-                    Plan
-                  </th>
-                  <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
-                    Status
-                  </th>
-                  <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
-                    Joined
-                  </th>
-                </tr>
-              </thead>
+      ) : filteredUsers.length === 0 ? (
+        <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-16">
+          <div className="flex flex-col items-center justify-center text-center">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+              <p className="text-sm font-medium text-white">No users found</p>
+              <p className="mt-2 text-sm text-zinc-500">
+                Try adjusting your search or filters to find what you&apos;re
+                looking for.
+              </p>
 
-              <tbody className="divide-y divide-white/10 bg-black">
-                {paginatedUsers.map((user) => (
-                  <tr
-                    key={user.id}
-                    className="transition-all duration-200 hover:bg-indigo-500/[0.04]"
-                  >
-                    <td className="px-5 py-4">
-                      <div>
-                        <p className="text-sm font-medium text-white">
-                          {user.name}
-                        </p>
-                        <p className="mt-1 text-sm text-zinc-500">
-                          {user.email}
-                        </p>
-                      </div>
-                    </td>
-
-                    <td className="px-5 py-4 text-sm text-zinc-300">
-                      {user.plan}
-                    </td>
-
-                    <td className="px-5 py-4">
-                      <StatusBadge status={user.status} />
-                    </td>
-
-                    <td className="px-5 py-4 text-sm text-zinc-300">
-                      {user.joinedAt}
-                    </td>
-                  </tr>
-                ))}
-
-                {filteredUsers.length === 0 && (
-                  <tr>
-                    <td colSpan={4} className="px-5 py-16">
-                      <div className="flex flex-col items-center justify-center text-center">
-                        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-                          <p className="text-sm font-medium text-white">
-                            No users found
-                          </p>
-                          <p className="mt-2 text-sm text-zinc-500">
-                            Try adjusting your search or filters to find what
-                            you&apos;re looking for.
-                          </p>
-
-                          <button
-                            onClick={() => {
-                              setQuery("");
-                              setActiveFilter("All");
-                            }}
-                            className="mt-4 rounded-xl bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
-                          >
-                            Reset filters
-                          </button>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+              <button
+                onClick={() => {
+                  setQuery("");
+                  setActiveFilter("All");
+                }}
+                className="mt-4 rounded-xl bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+              >
+                Reset filters
+              </button>
+            </div>
           </div>
         </div>
+      ) : (
+        <>
+          {/* Mobile cards */}
+          <div className="mt-6 space-y-3 md:hidden">
+            {paginatedUsers.map((user) => (
+              <div
+                key={user.id}
+                className="rounded-2xl border border-white/10 bg-white/[0.03] p-4"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-white">{user.name}</p>
+                    <p className="mt-1 break-all text-sm text-zinc-500">
+                      {user.email}
+                    </p>
+                  </div>
+
+                  <StatusBadge status={user.status} />
+                </div>
+
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.14em] text-zinc-500">
+                      Plan
+                    </p>
+                    <p className="mt-1 text-sm text-white">{user.plan}</p>
+                  </div>
+
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.14em] text-zinc-500">
+                      Joined
+                    </p>
+                    <p className="mt-1 text-sm text-white">{user.joinedAt}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop table */}
+          <div className="mt-6 hidden overflow-hidden rounded-2xl border border-white/10 md:block">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-white/10 text-left">
+                <thead className="bg-white/[0.03]">
+                  <tr>
+                    <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                      Name
+                    </th>
+                    <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                      Plan
+                    </th>
+                    <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                      Status
+                    </th>
+                    <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                      Joined
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody className="divide-y divide-white/10 bg-black">
+                  {paginatedUsers.map((user) => (
+                    <tr
+                      key={user.id}
+                      className="transition-all duration-200 hover:bg-indigo-500/[0.04]"
+                    >
+                      <td className="px-5 py-4">
+                        <div>
+                          <p className="text-sm font-medium text-white">
+                            {user.name}
+                          </p>
+                          <p className="mt-1 text-sm text-zinc-500">
+                            {user.email}
+                          </p>
+                        </div>
+                      </td>
+
+                      <td className="px-5 py-4 text-sm text-zinc-300">
+                        {user.plan}
+                      </td>
+
+                      <td className="px-5 py-4">
+                        <StatusBadge status={user.status} />
+                      </td>
+
+                      <td className="px-5 py-4 text-sm text-zinc-300">
+                        {user.joinedAt}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
       )}
 
       <div
@@ -263,7 +297,7 @@ export default function UsersTable({
           of <span className="text-white">{filteredUsers.length}</span> users
         </p>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1 || isLoading}

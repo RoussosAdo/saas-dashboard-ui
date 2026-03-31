@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useState } from "react";
 import DashboardShell from "app/components/layout/dashboard-shell";
 import DashboardSection from "app/components/dashboard/dashboard-section";
@@ -7,10 +8,14 @@ import PageHeader from "app/components/dashboard/page-header";
 import SettingRow from "app/components/dashboard/setting-row";
 import Toggle from "app/components/dashboard/toggle";
 
+
+
 export default function SettingsPage() {
   const [emailNotif, setEmailNotif] = useState(true);
   const [marketingNotif, setMarketingNotif] = useState(false);
   const [twoFA, setTwoFA] = useState(true);
+
+  
 
   return (
     <DashboardShell>
@@ -35,7 +40,7 @@ export default function SettingsPage() {
               <p className="text-sm text-zinc-500">Name</p>
               <input
                 defaultValue="Antonis Roussos"
-                className="mt-2 w-full rounded-xl bg-black/40 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-indigo-500/40"
+                className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2.5 text-sm text-white outline-none transition-all duration-300 focus:border-indigo-400/40 focus:ring-2 focus:ring-indigo-500/30"
               />
             </div>
 
@@ -43,11 +48,11 @@ export default function SettingsPage() {
               <p className="text-sm text-zinc-500">Email</p>
               <input
                 defaultValue="antonis@email.com"
-                className="mt-2 w-full rounded-xl bg-black/40 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-indigo-500/40"
+                className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2.5 text-sm text-white outline-none transition-all duration-300 focus:border-indigo-400/40 focus:ring-2 focus:ring-indigo-500/30"
               />
             </div>
 
-            <button className="rounded-xl bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90">
+            <button className="w-full rounded-xl bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 sm:w-auto">
               Save changes
             </button>
           </div>

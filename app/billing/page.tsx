@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import DashboardShell from "app/components/layout/dashboard-shell";
 import DashboardSection from "app/components/dashboard/dashboard-section";
 import PageHeader from "app/components/dashboard/page-header";
@@ -9,6 +11,10 @@ import {
   billingUsage,
 } from "app/data/analytics";
 
+export const metadata: Metadata = {
+  title: "Billing | SaaS Dashboard UI",
+};
+
 export default function BillingPage() {
   return (
     <DashboardShell>
@@ -17,7 +23,7 @@ export default function BillingPage() {
         title="Subscription overview"
         description="Review your plan, payment activity, workspace usage, and subscription details."
         action={
-          <button className="rounded-xl bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(99,102,241,0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(99,102,241,0.35)]">
+          <button className="w-full rounded-xl bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(99,102,241,0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(99,102,241,0.35)] md:w-auto">
             Upgrade plan
           </button>
         }
@@ -36,7 +42,7 @@ export default function BillingPage() {
 
       <section className="mt-6 grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
         <DashboardSection>
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-sm font-medium text-zinc-500">Payment method</p>
               <h2 className="mt-2 text-xl font-semibold text-white">
@@ -44,7 +50,7 @@ export default function BillingPage() {
               </h2>
             </div>
 
-            <button className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.06]">
+            <button className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.06] sm:w-auto">
               Edit
             </button>
           </div>
@@ -54,7 +60,7 @@ export default function BillingPage() {
             <p className="mt-2 text-lg font-semibold text-white">
               Visa ending in 2048
             </p>
-            <p className="mt-2 text-sm text-zinc-500">
+            <p className="mt-2 break-words text-sm leading-6 text-zinc-500">
               Expires 08/2028 · Billing contact: finance@saasco.com
             </p>
           </div>
@@ -62,7 +68,31 @@ export default function BillingPage() {
           <div className="mt-6">
             <p className="text-sm font-medium text-zinc-500">Invoice history</p>
 
-            <div className="mt-4 overflow-hidden rounded-2xl border border-white/10">
+            {/* Mobile cards */}
+            <div className="mt-4 space-y-3 md:hidden">
+              {billingInvoices.map((invoice) => (
+                <div
+                  key={invoice.id}
+                  className="rounded-2xl border border-white/10 bg-white/[0.03] p-4"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-medium text-white">{invoice.id}</p>
+                      <p className="mt-1 text-sm text-zinc-500">{invoice.date}</p>
+                    </div>
+                    <InvoiceBadge status={invoice.status} />
+                  </div>
+
+                  <p className="mt-4 text-sm text-zinc-500">Amount</p>
+                  <p className="mt-1 text-base font-semibold text-white">
+                    {invoice.amount}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop table */}
+            <div className="mt-4 hidden overflow-hidden rounded-2xl border border-white/10 md:block">
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-white/10 text-left">
                   <thead className="bg-white/[0.03]">
@@ -124,7 +154,7 @@ export default function BillingPage() {
                 className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:border-indigo-400/20 hover:bg-indigo-500/[0.04]"
               >
                 <p className="text-sm text-zinc-500">{item.label}</p>
-                <p className="mt-2 text-lg font-semibold text-white">
+                <p className="mt-2 break-words text-lg font-semibold text-white">
                   {item.value}
                 </p>
               </div>
@@ -140,7 +170,7 @@ export default function BillingPage() {
               for your team.
             </p>
 
-            <button className="mt-4 rounded-xl border border-indigo-400/30 bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
+            <button className="mt-4 w-full rounded-xl border border-indigo-400/30 bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 sm:w-auto">
               Compare plans
             </button>
           </div>

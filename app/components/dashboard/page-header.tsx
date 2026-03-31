@@ -12,13 +12,15 @@ export default function PageHeader({
   action,
 }: PageHeaderProps) {
   return (
-    <div className="mb-6 flex flex-col gap-4 border-b border-white/10 pb-6 md:flex-row md:items-start md:justify-between">
-      <div className="max-w-2xl">
+    <div className="mb-6 flex flex-col gap-4 border-b border-white/10 pb-6 md:flex-row md:items-end md:justify-between">
+      <div className="max-w-2xl min-w-0">
         {eyebrow ? (
-          <p className="text-sm font-medium text-zinc-500">{eyebrow}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-indigo-300/80">
+            {eyebrow}
+          </p>
         ) : null}
 
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        <h1 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
           {title}
         </h1>
 
@@ -29,7 +31,7 @@ export default function PageHeader({
         ) : null}
       </div>
 
-      {action ? <div className="shrink-0">{action}</div> : null}
+      {action ? <div className="w-full shrink-0 md:w-auto">{action}</div> : null}
     </div>
   );
 }

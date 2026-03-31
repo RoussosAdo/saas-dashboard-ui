@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import DashboardShell from "app/components/layout/dashboard-shell";
 import DashboardSection from "app/components/dashboard/dashboard-section";
 import PageHeader from "app/components/dashboard/page-header";
@@ -7,6 +9,10 @@ import {
   analyticsHighlights,
   analyticsInsights,
 } from "app/data/analytics";
+
+export const metadata: Metadata = {
+  title: "Analytics | SaaS Dashboard UI",
+};
 
 export default function AnalyticsPage() {
   return (

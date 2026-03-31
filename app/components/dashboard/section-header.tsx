@@ -13,13 +13,15 @@ export default function SectionHeader({
     <div className="flex items-center justify-between gap-4">
       <div>
         {eyebrow ? (
-          <p className="text-sm font-medium text-zinc-500">{eyebrow}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
+            {eyebrow}
+          </p>
         ) : null}
 
         <h2 className="mt-2 text-xl font-semibold text-white">{title}</h2>
       </div>
 
-      {action ? <div>{action}</div> : null}
+      {action ? <div className="shrink-0">{action}</div> : null}
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import DashboardShell from "app/components/layout/dashboard-shell";
 import StatCard from "app/components/dashboard/stat-card";
 import DashboardSection from "app/components/dashboard/dashboard-section";
@@ -6,6 +8,10 @@ import PageHeader from "app/components/dashboard/page-header";
 import UsersTable from "app/components/dashboard/users-table";
 import RevenueChart from "app/components/dashboard/revenue-chart";
 import { activityItems, stats } from "app/data/dashboard";
+
+export const metadata: Metadata = {
+  title: "Overview | SaaS Dashboard UI",
+};
 
 export default function Home() {
   return (
@@ -54,7 +60,7 @@ export default function Home() {
             {activityItems.map((item) => (
               <div
                 key={item.id}
-                className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:border-indigo-400/20 hover:bg-indigo-500/[0.04]"
+                className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-indigo-400/20 hover:bg-indigo-500/[0.04]"
               >
                 <p className="text-sm leading-6 text-zinc-300">{item.text}</p>
               </div>

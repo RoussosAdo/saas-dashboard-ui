@@ -1,29 +1,113 @@
 @import "tailwindcss";
 
+/* =========================
+   THEME TOKENS
+========================= */
 :root {
   --background: #050816;
   --foreground: #ffffff;
 
   --accent: #6366f1;
   --accent-2: #8b5cf6;
+
   --panel: #0b1020;
   --panel-2: #0f172a;
+
   --border: rgba(255, 255, 255, 0.08);
+}
+
+/* =========================
+   BASE RESET
+========================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 * {
   transition-property: background-color, border-color, color, transform, box-shadow;
 }
 
+/* =========================
+   HTML / BODY
+========================= */
 html {
   scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
+  min-height: 100vh;
+  
+
   background:
     radial-gradient(circle at top, rgba(99, 102, 241, 0.08), transparent 30%),
     radial-gradient(circle at right, rgba(139, 92, 246, 0.06), transparent 25%),
     var(--background);
+
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================
+   SCROLLBAR (premium touch)
+========================= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.4);
+}
+
+/* =========================
+   SELECTION
+========================= */
+::selection {
+  background: rgba(99, 102, 241, 0.3);
+  color: #fff;
+}
+
+/* =========================
+   INPUT / BUTTON FIXES
+========================= */
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
+/* Remove ugly autofill bg (Chrome) */
+input:-webkit-autofill {
+  box-shadow: 0 0 0 1000px #050816 inset !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+/* =========================
+   UTILITY: GLASS PANEL
+========================= */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+}
+
+/* =========================
+   FOCUS STYLES
+========================= */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4);
 }
