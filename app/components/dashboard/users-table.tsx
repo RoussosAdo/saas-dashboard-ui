@@ -9,10 +9,18 @@ import { dashboardUsers } from "app/data/dashboard";
 
 type StatusFilter = "All" | "Active" | "Pending" | "Inactive";
 
+type UsersTableProps = {
+  showHeader?: boolean;
+  className?: string;
+};
+
 const filters: StatusFilter[] = ["All", "Active", "Pending", "Inactive"];
 const USERS_PER_PAGE = 4;
 
-export default function UsersTable() {
+export default function UsersTable({
+  showHeader = true,
+  className = "",
+}: UsersTableProps) {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<StatusFilter>("All");
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,38 +67,56 @@ export default function UsersTable() {
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <DashboardSection className="mt-6">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <SectionHeader
-          eyebrow="Users"
-          title="Team members"
-          action={
-            <button className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.06]">
-              Export
-            </button>
-          }
-        />
-
-        <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-zinc-400 lg:w-[320px]">
-          <Search className="h-4 w-4 shrink-0" />
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search users, plan, or status..."
-            className="w-full bg-transparent text-sm text-white outline-none placeholder:text-zinc-500"
+    <DashboardSection className={showHeader ? `mt-6 ${className}` : className}>
+      {showHeader ? (
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <SectionHeader
+            eyebrow="Users"
+            title="Team members"
+            action={
+              <button className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.06]">
+                Export
+              </button>
+            }
           />
-        </div>
-      </div>
 
-      <div className="mt-6 flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-zinc-400 transition-all duration-300 focus-within:border-indigo-400/50 focus-within:bg-white/[0.05] focus-within:shadow-[0_0_0_4px_rgba(99,102,241,0.12)] lg:w-[320px]">
+            <Search className="h-4 w-4 shrink-0" />
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search users, plan, or status..."
+              className="w-full bg-transparent text-sm text-white outline-none placeholder:text-zinc-500"
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-zinc-400 transition-all duration-300 focus-within:border-indigo-400/50 focus-within:bg-white/[0.05] focus-within:shadow-[0_0_0_4px_rgba(99,102,241,0.12)] lg:w-[320px]">
+            <Search className="h-4 w-4 shrink-0" />
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search users, plan, or status..."
+              className="w-full bg-transparent text-sm text-white outline-none placeholder:text-zinc-500"
+            />
+          </div>
+
+          <button className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.06]">
+            Export
+          </button>
+        </div>
+      )}
+
+      <div className="flex flex-wrap items-center gap-2">
         {filters.map((filter) => (
           <button
             key={filter}
             onClick={() => setActiveFilter(filter)}
             className={`rounded-xl px-3 py-2 text-sm font-medium transition-all duration-300 ${
               activeFilter === filter
-              ? "bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] text-white shadow-[0_8px_20px_rgba(99,102,241,0.2)]"
-              : "border border-white/10 bg-white/[0.03] text-zinc-400 hover:-translate-y-0.5 hover:border-indigo-400/30 hover:bg-indigo-500/10 hover:text-white"
+                ? "bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] text-white shadow-[0_8px_20px_rgba(99,102,241,0.2)]"
+                : "border border-white/10 bg-white/[0.03] text-zinc-400 hover:-translate-y-0.5 hover:border-indigo-400/30 hover:bg-indigo-500/10 hover:text-white"
             }`}
           >
             {filter}

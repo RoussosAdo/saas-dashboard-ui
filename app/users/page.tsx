@@ -11,7 +11,7 @@ export default function UsersPage() {
         description="Manage workspace members, monitor account status, and review user activity."
       />
 
-      <UsersTable />
+      <UsersTable showHeader={false} />
     </DashboardShell>
   );
 }
