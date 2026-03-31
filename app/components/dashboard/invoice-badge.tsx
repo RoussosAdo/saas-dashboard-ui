@@ -1,5 +1,7 @@
+import type { InvoiceStatus } from "app/data/analytics";
+
 type InvoiceBadgeProps = {
-  status: "Paid" | "Pending" | "Failed";
+  status: InvoiceStatus;
 };
 
 export default function InvoiceBadge({ status }: InvoiceBadgeProps) {

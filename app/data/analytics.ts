@@ -1,3 +1,5 @@
+export type InvoiceStatus = "Paid" | "Pending" | "Failed";
+
 export const analyticsData = {
   Revenue: [
     { name: "Jan", value: 4000 },
@@ -104,7 +106,12 @@ export const billingSummary = [
   },
 ];
 
-export const billingInvoices = [
+export const billingInvoices: {
+  id: string;
+  date: string;
+  amount: string;
+  status: InvoiceStatus;
+}[] = [
   {
     id: "INV-3021",
     date: "2026-03-28",
