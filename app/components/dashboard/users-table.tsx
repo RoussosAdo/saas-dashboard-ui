@@ -25,6 +25,7 @@ export default function UsersTable({
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<StatusFilter>("All");
   const [currentPage, setCurrentPage] = useState(1);
+
   const debouncedQuery = useDebounce(query, 300);
 
   const filteredUsers = useMemo(() => {
@@ -68,6 +69,33 @@ export default function UsersTable({
 
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
+  const searchBox = (
+    <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-zinc-400 transition-all duration-300 focus-within:border-indigo-400/50 focus-within:bg-white/[0.05] focus-within:shadow-[0_0_0_4px_rgba(99,102,241,0.12)] lg:w-[320px]">
+      <Search className="h-4 w-4 shrink-0" />
+      <input
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search users, plan, or status..."
+        className="w-full bg-transparent text-sm text-white outline-none placeholder:text-zinc-500"
+      />
+      {query && (
+        <button
+          onClick={() => setQuery("")}
+          className="text-xs text-zinc-500 transition hover:text-white"
+          aria-label="Clear search"
+        >
+          ✕
+        </button>
+      )}
+    </div>
+  );
+
+  const exportButton = (
+    <button className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.06]">
+      Export
+    </button>
+  );
+
   return (
     <DashboardSection className={showHeader ? `mt-6 ${className}` : className}>
       {showHeader ? (
@@ -75,38 +103,14 @@ export default function UsersTable({
           <SectionHeader
             eyebrow="Users"
             title="Team members"
-            action={
-              <button className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.06]">
-                Export
-              </button>
-            }
+            action={exportButton}
           />
-
-          <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-zinc-400 transition-all duration-300 focus-within:border-indigo-400/50 focus-within:bg-white/[0.05] focus-within:shadow-[0_0_0_4px_rgba(99,102,241,0.12)] lg:w-[320px]">
-            <Search className="h-4 w-4 shrink-0" />
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search users, plan, or status..."
-              className="w-full bg-transparent text-sm text-white outline-none placeholder:text-zinc-500"
-            />
-          </div>
+          {searchBox}
         </div>
       ) : (
         <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-zinc-400 transition-all duration-300 focus-within:border-indigo-400/50 focus-within:bg-white/[0.05] focus-within:shadow-[0_0_0_4px_rgba(99,102,241,0.12)] lg:w-[320px]">
-            <Search className="h-4 w-4 shrink-0" />
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search users, plan, or status..."
-              className="w-full bg-transparent text-sm text-white outline-none placeholder:text-zinc-500"
-            />
-          </div>
-
-          <button className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.06]">
-            Export
-          </button>
+          {searchBox}
+          {exportButton}
         </div>
       )}
 
@@ -126,9 +130,9 @@ export default function UsersTable({
         ))}
 
         <div className="ml-1 flex items-center gap-2 text-xs text-zinc-500">
-  <span>{filteredUsers.length} users</span>
-  {query && <span>Searching for “{query}”</span>}
-</div>
+          <span>{filteredUsers.length} users</span>
+          {query && <span>Searching for “{query}”</span>}
+        </div>
       </div>
 
       <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
@@ -153,7 +157,10 @@ export default function UsersTable({
 
             <tbody className="divide-y divide-white/10 bg-black">
               {paginatedUsers.map((user) => (
-                <tr key={user.id} className="transition hover:bg-white/[0.02]">
+                <tr
+                  key={user.id}
+                  className="transition-all duration-200 hover:bg-indigo-500/[0.04]"
+                >
                   <td className="px-5 py-4">
                     <div>
                       <p className="text-sm font-medium text-white">{user.name}</p>
@@ -177,11 +184,28 @@ export default function UsersTable({
 
               {filteredUsers.length === 0 && (
                 <tr>
-                  <td
-                    colSpan={4}
-                    className="px-5 py-10 text-center text-sm text-zinc-500"
-                  >
-                    No users found for this search or filter.
+                  <td colSpan={4} className="px-5 py-16">
+                    <div className="flex flex-col items-center justify-center text-center">
+                      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                        <p className="text-sm font-medium text-white">
+                          No users found
+                        </p>
+                        <p className="mt-2 text-sm text-zinc-500">
+                          Try adjusting your search or filters to find what
+                          you're looking for.
+                        </p>
+
+                        <button
+                          onClick={() => {
+                            setQuery("");
+                            setActiveFilter("All");
+                          }}
+                          className="mt-4 rounded-xl bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+                        >
+                          Reset filters
+                        </button>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               )}
