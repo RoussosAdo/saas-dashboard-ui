@@ -1,4 +1,4 @@
-import type { ActivityItem, DashboardUser, Stat } from "public/app/types/dashboard";
+import type { ActivityItem, DashboardUser, Stat } from "app/types/dashboard";
 
 export const stats: Stat[] = [
   { label: "Revenue", value: "$24,500", change: "+12.4%" },

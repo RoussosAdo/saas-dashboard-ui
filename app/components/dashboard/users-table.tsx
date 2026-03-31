@@ -87,10 +87,10 @@ export default function UsersTable() {
           <button
             key={filter}
             onClick={() => setActiveFilter(filter)}
-            className={`rounded-xl px-3 py-2 text-sm font-medium transition ${
+            className={`rounded-xl px-3 py-2 text-sm font-medium transition-all duration-300 ${
               activeFilter === filter
-                ? "bg-white text-black"
-                : "border border-white/10 bg-white/[0.03] text-zinc-400 hover:bg-white/[0.06] hover:text-white"
+              ? "bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] text-white shadow-[0_8px_20px_rgba(99,102,241,0.2)]"
+              : "border border-white/10 bg-white/[0.03] text-zinc-400 hover:-translate-y-0.5 hover:border-indigo-400/30 hover:bg-indigo-500/10 hover:text-white"
             }`}
           >
             {filter}
@@ -191,7 +191,7 @@ export default function UsersTable() {
               onClick={() => setCurrentPage(page)}
               className={`rounded-xl px-3 py-2 text-sm font-medium transition ${
                 currentPage === page
-                  ? "bg-white text-black"
+                  ? "bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] text-white shadow-[0_8px_20px_rgba(99,102,241,0.22)]"
                   : "border border-white/10 text-zinc-400 hover:bg-white/[0.04] hover:text-white"
               }`}
             >
