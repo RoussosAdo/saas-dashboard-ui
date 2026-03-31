@@ -7,6 +7,7 @@ import SectionHeader from "app/components/dashboard/section-header";
 import StatusBadge from "app/components/dashboard/status-badge";
 import { dashboardUsers } from "app/data/dashboard";
 import { useDebounce } from "app/lib/use-debounce";
+import TableSkeleton from "app/components/dashboard/table-skeleton";
 
 type StatusFilter = "All" | "Active" | "Pending" | "Inactive";
 
@@ -27,6 +28,8 @@ export default function UsersTable({
   const [currentPage, setCurrentPage] = useState(1);
 
   const debouncedQuery = useDebounce(query, 300);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const filteredUsers = useMemo(() => {
     const value = debouncedQuery.trim().toLowerCase();
@@ -60,6 +63,16 @@ export default function UsersTable({
       setCurrentPage(totalPages);
     }
   }, [currentPage, totalPages]);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [debouncedQuery, activeFilter, currentPage]);
 
   const paginatedUsers = useMemo(() => {
     const start = (currentPage - 1) * USERS_PER_PAGE;
@@ -135,86 +148,96 @@ export default function UsersTable({
         </div>
       </div>
 
-      <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-white/10 text-left">
-            <thead className="bg-white/[0.03]">
-              <tr>
-                <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
-                  Name
-                </th>
-                <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
-                  Plan
-                </th>
-                <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
-                  Status
-                </th>
-                <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
-                  Joined
-                </th>
-              </tr>
-            </thead>
+      {isLoading ? (
+  <div className="mt-6">
+    <TableSkeleton rows={USERS_PER_PAGE} />
+  </div>
+) : (
+  <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
+    <div className="overflow-x-auto">
+      <table className="min-w-full divide-y divide-white/10 text-left">
+        <thead className="bg-white/[0.03]">
+          <tr>
+            <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+              Name
+            </th>
+            <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+              Plan
+            </th>
+            <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+              Status
+            </th>
+            <th className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+              Joined
+            </th>
+          </tr>
+        </thead>
 
-            <tbody className="divide-y divide-white/10 bg-black">
-              {paginatedUsers.map((user) => (
-                <tr
-                  key={user.id}
-                  className="transition-all duration-200 hover:bg-indigo-500/[0.04]"
-                >
-                  <td className="px-5 py-4">
-                    <div>
-                      <p className="text-sm font-medium text-white">{user.name}</p>
-                      <p className="mt-1 text-sm text-zinc-500">{user.email}</p>
-                    </div>
-                  </td>
+        <tbody className="divide-y divide-white/10 bg-black">
+          {paginatedUsers.map((user) => (
+            <tr
+              key={user.id}
+              className="transition-all duration-200 hover:bg-indigo-500/[0.04]"
+            >
+              <td className="px-5 py-4">
+                <div>
+                  <p className="text-sm font-medium text-white">{user.name}</p>
+                  <p className="mt-1 text-sm text-zinc-500">{user.email}</p>
+                </div>
+              </td>
 
-                  <td className="px-5 py-4 text-sm text-zinc-300">
-                    {user.plan}
-                  </td>
+              <td className="px-5 py-4 text-sm text-zinc-300">
+                {user.plan}
+              </td>
 
-                  <td className="px-5 py-4">
-                    <StatusBadge status={user.status} />
-                  </td>
+              <td className="px-5 py-4">
+                <StatusBadge status={user.status} />
+              </td>
 
-                  <td className="px-5 py-4 text-sm text-zinc-300">
-                    {user.joinedAt}
-                  </td>
-                </tr>
-              ))}
+              <td className="px-5 py-4 text-sm text-zinc-300">
+                {user.joinedAt}
+              </td>
+            </tr>
+          ))}
 
-              {filteredUsers.length === 0 && (
-                <tr>
-                  <td colSpan={4} className="px-5 py-16">
-                    <div className="flex flex-col items-center justify-center text-center">
-                      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-                        <p className="text-sm font-medium text-white">
-                          No users found
-                        </p>
-                        <p className="mt-2 text-sm text-zinc-500">
-                          Try adjusting your search or filters to find what
-                          you're looking for.
-                        </p>
+          {filteredUsers.length === 0 && (
+            <tr>
+              <td colSpan={4} className="px-5 py-16">
+                <div className="flex flex-col items-center justify-center text-center">
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                    <p className="text-sm font-medium text-white">
+                      No users found
+                    </p>
+                    <p className="mt-2 text-sm text-zinc-500">
+                      Try adjusting your search or filters to find what
+                      you're looking for.
+                    </p>
 
-                        <button
-                          onClick={() => {
-                            setQuery("");
-                            setActiveFilter("All");
-                          }}
-                          className="mt-4 rounded-xl bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
-                        >
-                          Reset filters
-                        </button>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                    <button
+                      onClick={() => {
+                        setQuery("");
+                        setActiveFilter("All");
+                      }}
+                      className="mt-4 rounded-xl bg-[linear-gradient(90deg,#6366F1,#8B5CF6)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+                    >
+                      Reset filters
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  </div>
+)}
 
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div
+  className={`mt-4 flex flex-col gap-3 transition-opacity sm:flex-row sm:items-center sm:justify-between ${
+    isLoading ? "opacity-60" : "opacity-100"
+  }`}
+>
         <p className="text-sm text-zinc-500">
           Showing{" "}
           <span className="text-white">
