@@ -1,14 +1,18 @@
 import DashboardShell from "app/components/layout/dashboard-shell";
 import DashboardSection from "app/components/dashboard/dashboard-section";
-import SectionHeader from "app/components/dashboard/section-header";
+import PageHeader from "app/components/dashboard/page-header";
 
 export default function SettingsPage() {
   return (
     <DashboardShell>
-      <DashboardSection>
-        <SectionHeader eyebrow="Settings" title="Workspace settings" />
+      <PageHeader
+        eyebrow="Settings"
+        title="Workspace settings"
+        description="Update preferences, notifications, security options, and workspace controls."
+      />
 
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
+      <DashboardSection>
+        <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
             <p className="text-sm font-medium text-white">Profile</p>
             <p className="mt-2 text-sm text-zinc-500">

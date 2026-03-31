@@ -1,14 +1,18 @@
 import DashboardShell from "app/components/layout/dashboard-shell";
 import DashboardSection from "app/components/dashboard/dashboard-section";
-import SectionHeader from "app/components/dashboard/section-header";
+import PageHeader from "app/components/dashboard/page-header";
 
 export default function BillingPage() {
   return (
     <DashboardShell>
-      <DashboardSection>
-        <SectionHeader eyebrow="Billing" title="Subscription overview" />
+      <PageHeader
+        eyebrow="Billing"
+        title="Subscription overview"
+        description="Review your current plan, billing cycle, and workspace subscription details."
+      />
 
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
+      <DashboardSection>
+        <div className="grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
             <p className="text-sm text-zinc-500">Current plan</p>
             <p className="mt-2 text-2xl font-semibold text-white">Pro</p>
