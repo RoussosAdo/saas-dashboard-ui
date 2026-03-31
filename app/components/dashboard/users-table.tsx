@@ -6,6 +6,7 @@ import DashboardSection from "app/components/dashboard/dashboard-section";
 import SectionHeader from "app/components/dashboard/section-header";
 import StatusBadge from "app/components/dashboard/status-badge";
 import { dashboardUsers } from "app/data/dashboard";
+import { useDebounce } from "app/lib/use-debounce";
 
 type StatusFilter = "All" | "Active" | "Pending" | "Inactive";
 
@@ -24,9 +25,10 @@ export default function UsersTable({
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<StatusFilter>("All");
   const [currentPage, setCurrentPage] = useState(1);
+  const debouncedQuery = useDebounce(query, 300);
 
   const filteredUsers = useMemo(() => {
-    const value = query.trim().toLowerCase();
+    const value = debouncedQuery.trim().toLowerCase();
 
     return dashboardUsers.filter((user) => {
       const matchesSearch =
@@ -41,7 +43,7 @@ export default function UsersTable({
 
       return matchesSearch && matchesFilter;
     });
-  }, [query, activeFilter]);
+  }, [debouncedQuery, activeFilter]);
 
   const totalPages = Math.max(
     1,
@@ -50,7 +52,7 @@ export default function UsersTable({
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [query, activeFilter]);
+  }, [debouncedQuery, activeFilter]);
 
   useEffect(() => {
     if (currentPage > totalPages) {
@@ -123,9 +125,10 @@ export default function UsersTable({
           </button>
         ))}
 
-        <span className="ml-1 text-xs text-zinc-500">
-          {filteredUsers.length} users
-        </span>
+        <div className="ml-1 flex items-center gap-2 text-xs text-zinc-500">
+  <span>{filteredUsers.length} users</span>
+  {query && <span>Searching for “{query}”</span>}
+</div>
       </div>
 
       <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
