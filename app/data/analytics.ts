@@ -85,3 +85,57 @@ export const analyticsInsights = [
       "Conversion rate improvements suggest that onboarding and key activation flows are performing better.",
   },
 ];
+
+export const billingSummary = [
+  {
+    label: "Current plan",
+    value: "Pro",
+    note: "Includes analytics, team access, and exports",
+  },
+  {
+    label: "Monthly cost",
+    value: "$49",
+    note: "Billed monthly on your renewal cycle",
+  },
+  {
+    label: "Renewal date",
+    value: "Apr 28",
+    note: "Your subscription renews automatically",
+  },
+];
+
+export const billingInvoices = [
+  {
+    id: "INV-3021",
+    date: "2026-03-28",
+    amount: "$49.00",
+    status: "Paid",
+  },
+  {
+    id: "INV-2964",
+    date: "2026-02-28",
+    amount: "$49.00",
+    status: "Paid",
+  },
+  {
+    id: "INV-2897",
+    date: "2026-01-28",
+    amount: "$49.00",
+    status: "Paid",
+  },
+];
+
+export const billingUsage = [
+  {
+    label: "Team members",
+    value: "8 / 10",
+  },
+  {
+    label: "Reports generated",
+    value: "124 / 200",
+  },
+  {
+    label: "Storage",
+    value: "18 GB / 50 GB",
+  },
+];
