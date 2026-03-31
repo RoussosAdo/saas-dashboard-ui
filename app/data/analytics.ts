@@ -44,3 +44,44 @@ export const analyticsData = {
 };
 
 export type AnalyticsMetric = keyof typeof analyticsData;
+
+export const analyticsHighlights = [
+  {
+    label: "Net growth",
+    value: "+18.4%",
+    note: "Compared to the previous 30 days",
+  },
+  {
+    label: "Avg. session time",
+    value: "6m 24s",
+    note: "Users are spending longer in core flows",
+  },
+  {
+    label: "Churn rate",
+    value: "2.1%",
+    note: "Stable compared to last month",
+  },
+  {
+    label: "New signups",
+    value: "1,248",
+    note: "Strong acquisition momentum this cycle",
+  },
+];
+
+export const analyticsInsights = [
+  {
+    title: "Revenue momentum is accelerating",
+    description:
+      "Revenue has shown steady month-over-month growth, with stronger gains in the second half of the year.",
+  },
+  {
+    title: "User growth remains healthy",
+    description:
+      "New user acquisition continues to rise, supporting broader product adoption and increased engagement.",
+  },
+  {
+    title: "Conversion is trending upward",
+    description:
+      "Conversion rate improvements suggest that onboarding and key activation flows are performing better.",
+  },
+];
